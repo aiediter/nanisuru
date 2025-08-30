@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nanisuru?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Kosugi Maru', sans-serif;
+            background-color: #fce4ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            min-width: 320px;
+        }
+        .title {
+            color: #d81b60;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .result-box {
+            background-color: #ffebee;
+            color: #c2185b;
+            padding: 2rem 1.5rem;
+            border-radius: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease-in-out;
+            text-wrap: balance;
+        }
+        .result-box.active {
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        .button-nanisuru {
+            background-image: linear-gradient(45deg, #ff8a80, #e040fb);
+            color: white;
+            font-size: 1.25rem;
+            font-weight: bold;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(224, 64, 251, 0.4);
+            transition: all 0.3s ease-in-out;
+        }
+        .button-nanisuru:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(224, 64, 251, 0.6);
+        }
+        .button-nanisuru:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(224, 64, 251, 0.4);
+        }
+        .description {
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: #888;
+        }
+        .social-share {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .share-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: white;
+            transition: transform 0.2s ease-in-out;
+        }
+        .share-button:hover {
+            transform: translateY(-2px);
+        }
+        .share-button.x {
+            background-color: #000;
+        }
+        .share-button.instagram {
+            background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888, #990099);
+        }
+        .share-button svg {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container w-full sm:w-4/5 md:w-3/5 lg:w-2/5 mx-auto">
+        <h1 class="title">nanisuru?</h1>
+        <div id="result-text" class="result-box">
+            ボタンを押して何をするか決めよう！
+        </div>
+        <button id="nanisuru-button" class="button-nanisuru">
+            なににする？
+        </button>
+        <div id="share-buttons" class="social-share hidden">
+            <!-- X (Twitter) Share Button -->
+            <a id="x-share-button" href="#" class="share-button x" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937L7.382 9.453 2.76 15.25H.302l5.5-6.293L.085.75h5.063l3.495 4.415L12.6.75Zm-.86 13.028h1.36L4.323 2.145H2.863l9.378 11.633Z"/>
+                </svg>
+                Xでシェア
+            </a>
+            <!-- Instagram Share Button (placeholder for now, Instagram API requires more complex setup) -->
+            <a id="instagram-share-button" href="#" class="share-button instagram" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.269.087 3.85.048 4.703.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372a3.927 3.927 0 0 0 1.417-.923c.445-.445.718-.891.923-1.417.198-.51.333-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.172-.048-3.297c-.04-.852-.174-1.433-.372-1.942a3.917 3.917 0 0 0-.923-1.417A3.927 3.927 0 0 0 13.24.42c-.51-.198-1.09-.333-1.942-.372C10.445.01 10.173 0 8 0zm0 1.583c2.096 0 2.368.008 3.204.045.783.037 1.25.163 1.579.29.406.166.757.382 1.063.688.306.306.522.657.688 1.063.127.329.253.796.29 1.579.037.836.045 1.108.045 3.204 0 2.096-.008 2.368-.045 3.204-.037.783-.163 1.25-.29 1.579-.166.406-.382.757-.688 1.063a4.01 4.01 0 0 1-1.063.688c-.329.127-.796.253-1.579.29-.836.037-1.108.045-3.204.045-2.096 0-2.368-.008-3.204-.045-.783-.037-1.25-.163-1.579-.29a3.917 3.917 0 0 1-1.063-.688 3.917 3.917 0 0 1-.688-1.063c-.127-.329-.253-.796-.29-1.579-.037-.836-.045-1.108-.045-3.204 0-2.096.008-2.368.045-3.204.037-.783.163-1.25.29-1.579.166-.406.382-.757.688-1.063a3.917 3.917 0 0 1 1.063-.688c.329-.127.796-.253 1.579-.29.836-.037 1.108-.045 3.204-.045zm0 1.583c-2.456 0-2.694.01-3.649.053-.945.043-1.516.208-1.932.368-.42.162-.777.408-1.127.758-.35.35-.596.707-.758 1.127-.16.416-.325.987-.368 1.932C1.59 5.56 1.583 5.798 1.583 8s.008 2.44.053 3.395c.043.945.208 1.516.368 1.932.162.42.408.777.758 1.127.35.35.707.596 1.127.758.416.16.987.325 1.932.368.955.045 1.193.053 3.65.053 2.456 0 2.694-.01 3.649-.053.945-.043 1.516-.208 1.932-.368.42-.162.777-.408 1.127-.758.35-.35.596-.707.758-1.127.16-.416.325-.987.368-1.932.045-.955.053-1.193.053-3.65s-.01-2.44-.053-3.395c-.043-.945-.208-1.516-.368-1.932-.162-.42-.408-.777-.758-1.127-.35-.35-.707-.596-1.127-.758-.416-.16-.987-.325-1.932-.368C10.44 1.59 10.202 1.583 8 1.583zm0 3.635a4.782 4.782 0 1 0 0 9.564 4.782 4.782 0 0 0 0-9.564zm0 1.583a3.199 3.199 0 1 1 0 6.398 3.199 3.199 0 0 1 0-6.398zm5.286-.968a.987.987 0 1 1-1.974 0 .987.987 0 0 1 1.974 0z"/>
+                </svg>
+                Instagramでシェア
+            </a>
+        </div>
+        <div class="description">
+            「nanisuru?」は暇な時間を最高にするためのサービスだよ！
+        </div>
+    </div>
+
+    <script>
+        // アクティビティのリストを定義
+        const activities = [
+            'カフェ巡り',
+            'ショッピング',
+            '映画鑑賞',
+            '公園でのんびり',
+            'ドライブ',
+            'ボードゲームカフェ',
+            '猫カフェ・動物カフェ',
+            'サイクリング',
+            '美味しいランチ探し',
+            '散歩しながら写真撮影',
+            '本屋で立ち読み',
+            '新しい趣味探し',
+            '最寄り駅から4つ隣の駅で降りて最初に目についた店に入ってみる',
+            'チェーン店ではないカフェで一番おしゃれな店探して入ってみる',
+            '一度も乗ったことのない行き先のバスに乗ってみて最初に気になった停留所で降りてみる',
+            '駅のホームから見渡せる範囲で、隠れた名所を探してみる',
+            '図書館で自分の生まれた年のベストセラーを調べて最初の1ページだけ読んでみる',
+            '100円ショップで一番意味不明な商品を見つけ自分なりの使い方を3つ考えてみる',
+            '駄菓子屋さんに行ってパッケージが懐かしいと思うお菓子を買う',
+            'スーパーで食べたことのない野菜やスパイスを一つだけ買って調理してみる',
+            '好きなアーティストの曲を聴き歌詞に登場する場所やアイテムを調べてみる',
+            'お店の店員さんにおすすめの商品を聞いてそれを買ってみる',
+            '最寄りのコンビニで一番美味しそうに見えるおにぎりを直感で買ってみる',
+            '白壁とスマホライトでセルフポートレートを3ポーズ撮ってみる',
+            '青系パッケージだけで1000円以内のお菓子詰め合わせを作る',
+            '最寄りの銭湯ですっきりする',
+            '異なるコンビニ3店を巡り各店で1品ずつオリジナルおつまみを購入して乾杯',
+            'TIKTOKのダンスを練習してインスタグラムに親しい友達で上げてみる',
+            'ペプシとペプシゼロとコカコーラとコカコーラゼロを飲み比べ',
+            'IKEAにぬいぐるみを見に行く',
+            '100均でグッズを一つ買ってプリクラを撮る',
+            'サイゼリヤで頼んだことない商品を注文してみる',
+            '並んでるお店を探して並んでみる',
+            'コンビニの商品だけでコース料理を考える',
+            '近くの映画館で一番上映回数が少ない映画を見てみる',
+            'コンビニの商品で最強のコンビを決める',
+            'カラオケに行く',
+            'ボーリングをしに行く',
+            'UFOキャッチャーの景品がとれるまでやってみる',
+            '映画館に行く',
+            '美術館に行く',
+            '博物館に行く',
+            '水族館に行く',
+            '動物園に行く',
+            '遊園地に行く',
+            'スパに行く',
+            '近くの市場に行ってみる',
+            '面白そうなフェスを探してみる',
+            '大きい公園でピクニックしてみる',
+            '近くの公園で本気で遊んでみる',
+            'ガチャガチャをする',
+            '一番くじを引いてみる',
+            '古着屋に行く',
+            'LEGOをかって組み立ててみる',
+            '科学館に行く',
+            'ラーメンを食べに行く',
+            'マックのイベントメニューを食べる',
+            'スタバの新作を飲む',
+            '気になるボードゲームを買って遊んでみる',
+        ];
+
+        const nanisuruButton = document.getElementById('nanisuru-button');
+        const resultText = document.getElementById('result-text');
+        const shareButtonsDiv = document.getElementById('share-buttons');
+        const xShareButton = document.getElementById('x-share-button');
+        const instagramShareButton = document.getElementById('instagram-share-button');
+        
+        // ボタンがクリックされた時の処理
+        nanisuruButton.addEventListener('click', () => {
+            // アニメーションクラスを一度削除
+            resultText.classList.remove('active');
+
+            // requestAnimationFrameを使って次の描画サイクルでクラスを追加
+            requestAnimationFrame(() => {
+                const randomIndex = Math.floor(Math.random() * activities.length);
+                const selectedActivity = activities[randomIndex];
+                
+                resultText.textContent = selectedActivity;
+                resultText.classList.add('active');
+            });
+
+            // シェアボタンを表示
+            shareButtonsDiv.classList.remove('hidden');
+
+            // シェアURLを生成
+            const shareText = `【nanisuru?】今日の運勢は...\n\n「${resultText.textContent}」に決定！✨\n\nあなたも暇つぶしを探してみない？\n`;
+            const shareUrl = "https://example.com/nanisuru"; // ここにサービスURLを記載してください
+            
+            // X (Twitter) のシェアURL
+            const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}&hashtags=nanisuru,暇つぶし,何する`;
+            xShareButton.href = xUrl;
+
+            // InstagramのシェアURL (ここではテキストをコピーする方式を推奨)
+            const instagramUrl = `https://www.instagram.com/`; 
+            instagramShareButton.href = instagramUrl;
+        });
+    </script>
+
+</body>
+</html>
